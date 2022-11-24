@@ -20,6 +20,8 @@ const client =  new MongoClient(uri);
         const categoriesCollection = client.db("resellingBooks").collection("categories");
         const usersCollection = client.db("resellingBooks").collection("users");
         const scienceFictionCollection = client.db("resellingBooks").collection("scienceFiction");
+        const mysteryCollection = client.db("resellingBooks").collection("mystery");
+        const shortStoriesCollection = client.db("resellingBooks").collection("shortStories");
 
         app.get('/categories', async(req, res) => {
             const query = {};
@@ -46,6 +48,20 @@ const client =  new MongoClient(uri);
           const cursor = scienceFictionCollection.find(query);
           const users = await cursor.toArray();
           res.send(users);
+        })
+
+        app.get('/category/637e7e300122d590fe2ebd84', async(req, res) => {
+          const query = {};
+          const cursor = mysteryCollection.find(query);
+          const books = await cursor.toArray();
+          res.send(books);
+        })
+
+        app.get('/category/637e7e300122d590fe2ebd85', async(req, res) => {
+          const query = {};
+          const cursor = shortStoriesCollection.find(query);
+          const books = await cursor.toArray();
+          res.send(books);
         })
     }
     catch(error){
