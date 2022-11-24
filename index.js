@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 //middle wares
 app.use(cors())
@@ -30,7 +30,7 @@ const client =  new MongoClient(uri);
             const categories = await cursor.toArray();
             res.send(categories)
         })
-
+    
         app.post('/users', async(req, res) => {
           const user = req.body;
           const result = await usersCollection.insertOne(user);
@@ -38,7 +38,12 @@ const client =  new MongoClient(uri);
         })
 
         app.get('/users', async(req, res) => {
-          const query = {};
+          let query = {};
+          if(req.query.type){
+            query= {
+              type: req.query.type
+            }
+          }
           const cursor = usersCollection.find(query);
           const users = await cursor.toArray();
           res.send(users);
@@ -91,7 +96,29 @@ const client =  new MongoClient(uri);
           const user = await usersCollection.findOne(query);
           res.send({ isBuyer: user?.type === 'Buyer' });
       })
-      
+
+        app.get('/users/admin/:email', async (req, res) => {
+          const email = req.params.email;
+          const query = { email }
+          const user = await usersCollection.findOne(query);
+          res.send({ isAdmin: user?.type === 'Admin' });
+      })
+
+      app.put('/users/sellers/:id', async (req, res) => {
+        const id = req.params.id;
+        const filter = { _id: ObjectId(id)}
+        const options = { upsert: true };
+        const updatedDoc = {
+            $set: {
+                verified: 'true'
+            }
+        }
+        const result = await usersCollection.updateOne(filter, updatedDoc, options);
+        res.send(result);
+    });
+
+   
+
     }
     catch(error){
         console.log(error.name, error.message, error.stack);
