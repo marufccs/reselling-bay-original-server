@@ -18,12 +18,34 @@ const client =  new MongoClient(uri);
     try{
         await client.connect();
         const categoriesCollection = client.db("resellingBooks").collection("categories");
+        const usersCollection = client.db("resellingBooks").collection("users");
+        const scienceFictionCollection = client.db("resellingBooks").collection("scienceFiction");
 
         app.get('/categories', async(req, res) => {
             const query = {};
             const cursor = categoriesCollection.find(query);
             const categories = await cursor.toArray();
             res.send(categories)
+        })
+
+        app.post('/users', async(req, res) => {
+          const user = req.body;
+          const result = await usersCollection.insertOne(user);
+          res.send(result)
+        })
+
+        app.get('/users', async(req, res) => {
+          const query = {};
+          const cursor = usersCollection.find(query);
+          const users = await cursor.toArray();
+          res.send(users);
+        })
+
+        app.get('/category/637e7e300122d590fe2ebd83', async(req, res) => {
+          const query = {};
+          const cursor = scienceFictionCollection.find(query);
+          const users = await cursor.toArray();
+          res.send(users);
         })
     }
     catch(error){

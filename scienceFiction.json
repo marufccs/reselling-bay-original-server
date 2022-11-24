@@ -1,0 +1,22 @@
+[
+    {
+        "img" : "https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781982146160/frankenstein-9781982146160_hr.jpg",
+        "title" : "Frankenstein",
+        "location" : "Milan, Italy",
+        "originalPrice" : "35",
+        "resalePrice" : "19",
+        "yearsOfUse" : "2",
+        "time" : "22 October,2022",
+        "sellerName" : "Kirlos Ashraf"
+    },
+    {
+        "img" : "https://kbimages1-a.akamaihd.net/3400139b-e38a-4863-9364-af5bccfc938f/353/569/90/False/1984-nineteen-eighty-four-15.jpg",
+        "title" : "Nineteen Eighty-Four",
+        "location" : "Lodi, Italy",
+        "originalPrice" : "42",
+        "resalePrice" : "25",
+        "yearsOfUse" : "4",
+        "time" : "28 October,2022",
+        "sellerName" : "Araf Mohammad"
+    }
+]
