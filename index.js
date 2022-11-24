@@ -22,6 +22,7 @@ const client =  new MongoClient(uri);
         const scienceFictionCollection = client.db("resellingBooks").collection("scienceFiction");
         const mysteryCollection = client.db("resellingBooks").collection("mystery");
         const shortStoriesCollection = client.db("resellingBooks").collection("shortStories");
+        const bookingCollection =  client.db("resellingBooks").collection("bookings");
 
         app.get('/categories', async(req, res) => {
             const query = {};
@@ -63,6 +64,34 @@ const client =  new MongoClient(uri);
           const books = await cursor.toArray();
           res.send(books);
         })
+
+        app.post('/bookings', async(req, res) => {
+          const user = req.body;
+          const bookings = await bookingCollection.insertOne(user);
+          res.send(bookings)
+        })
+
+        app.get('/bookings', async(req, res) => {
+          const query = {};
+          const cursor = bookingCollection.find(query);
+          const bookings = await cursor.toArray();
+          res.send(bookings);
+        })
+
+        app.get('/users/seller/:email', async (req, res) => {
+          const email = req.params.email;
+          const query = { email }
+          const user = await usersCollection.findOne(query);
+          res.send({ isSeller: user?.type === 'Seller' });
+      })
+
+        app.get('/users/buyer/:email', async (req, res) => {
+          const email = req.params.email;
+          const query = { email }
+          const user = await usersCollection.findOne(query);
+          res.send({ isBuyer: user?.type === 'Buyer' });
+      })
+      
     }
     catch(error){
         console.log(error.name, error.message, error.stack);
