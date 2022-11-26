@@ -1,0 +1,80 @@
+[ 
+      {
+        "img":"https://d28hgpri8am2if.cloudfront.net/book_images/onix/  cvr9781982146160/frankenstein-9781982146160_hr.jpg",
+        "category_id" : "637e7e300122d590fe2ebd83",
+        "title":"Frankenstein",
+        "location":"Milan, Italy",
+        "originalPrice":"35",
+        "resalePrice":"19",
+        "yearsOfUse":"2",
+        "sellerName":"Kirlos Ashraf",
+        "time":"22 October,2022",
+        "productCondition":"Good",
+        "productDescription":"Excellent Product"
+    },
+    {
+        "img":"https://kbimages1-a.akamaihd.net/3400139b-e38a-4863-9364-af5bccfc938f/353/569/90/False/1984-nineteen-eighty-four-15.jpg",
+        "category_id" : "637e7e300122d590fe2ebd83",
+        "title":"Nineteen Eighty-Four",
+        "location":"Lodi,Italy",
+        "originalPrice":"42",
+        "resalePrice":"25",
+        "yearsOfUse":"4",
+        "time":"28 October,2022",
+        "sellerName":"Araf Mohammad",
+        "productCondition":"Excellent",
+        "productDescription":"Awesome Product"
+    },
+    {
+        "img":"https://m.media-amazon.com/images/I/81gN2183CnL.jpg",
+        "category_id" : "637e7e300122d590fe2ebd84",
+        "title":"Desert Star",
+        "location":"Rome,Italy",
+        "originalPrice":"39",
+        "resalePrice":"20",
+        "yearsOfUse":"4",
+        "time":"14 November,2022",
+        "sellerName":"Khalid Farhan",
+        "productCondition":"Fair",
+        "productDescription":"Excellent Product"
+    },
+        {
+            "img":"https://m.media-amazon.com/images/I/51GXfPLNozL._SX342_SY445_QL70_ML2_.jpg",
+            "category_id" : "637e7e300122d590fe2ebd84",
+            "title":"No Plan B: A Jack Reacher Novel",
+            "location":"Milan,Italy",
+            "originalPrice":"25",
+            "resalePrice":"10",
+            "yearsOfUse":"3",
+            "time":"05 September,2022",
+            "sellerName":"Ayman Sadik",
+            "productCondition":"Excellent",
+            "productDescription":"Awesome Product"
+        },
+    {
+        "img" : "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/A_Good_Man_Is_Hard_to_Find_-_Cover.jpg/800px-A_Good_Man_Is_Hard_to_Find_-_Cover.jpg",
+        "category_id" : "637e7e300122d590fe2ebd85",
+        "title" : "A Good Man Is Hard to Find",
+        "location" : "Pavia, Italy",
+        "originalPrice" : "20",
+        "resalePrice" : "05",
+        "yearsOfUse" : "1",
+        "time" : "17 November,2022",
+        "sellerName" : "Harry Potter",
+        "productCondition":"Good",
+        "productDescription":"Excellent Product"
+    },
+    {
+        "img" : "https://kbimages1-a.akamaihd.net/3c929409-5ca5-413b-9894-2729a38668ce/1200/1200/False/the-yellow-wallpaper-155.jpg",
+        "category_id" : "637e7e300122d590fe2ebd85",
+        "title" : "The Yellow Wallpaper",
+        "location" : "Milan, Italy",
+        "originalPrice" : "19",
+        "resalePrice" : "10",
+        "yearsOfUse" : "5",
+        "time" : "09 November,2022",
+        "sellerName" : "Ron Weasley",
+        "productCondition":"Fair",
+        "productDescription":"Awesome Product"
+    }
+]

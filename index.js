@@ -23,6 +23,10 @@ const client =  new MongoClient(uri);
         const mysteryCollection = client.db("resellingBooks").collection("mystery");
         const shortStoriesCollection = client.db("resellingBooks").collection("shortStories");
         const bookingCollection =  client.db("resellingBooks").collection("bookings");
+        const wishListedBooksCollection =  client.db("resellingBooks").collection("wishlist");
+        const addedBooksCollection =  client.db("resellingBooks").collection("newAddedBooks");
+        const allBooksCollection =  client.db("resellingBooks").collection("allBooks");
+        
 
         app.get('/categories', async(req, res) => {
             const query = {};
@@ -42,6 +46,11 @@ const client =  new MongoClient(uri);
           if(req.query.type){
             query= {
               type: req.query.type
+            }
+          }
+          else if (req.query.email){
+            query={
+              email: req.query.email
             }
           }
           const cursor = usersCollection.find(query);
@@ -77,7 +86,12 @@ const client =  new MongoClient(uri);
         })
 
         app.get('/bookings', async(req, res) => {
-          const query = {};
+          let query = {};
+          if(req.query.userEmail){
+            query= {
+              userEmail: req.query.userEmail
+            }
+          }
           const cursor = bookingCollection.find(query);
           const bookings = await cursor.toArray();
           res.send(bookings);
@@ -117,7 +131,90 @@ const client =  new MongoClient(uri);
         res.send(result);
     });
 
-   
+    app.delete('/users/buyers/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id : ObjectId(id)};
+      const result = await usersCollection.deleteOne(query);
+      res.send(result);
+      })
+
+    app.delete('/users/sellers/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = {_id : ObjectId(id)};
+      const result = await usersCollection.deleteOne(query);
+      res.send(result);
+      })
+
+      app.post('/wishlist', async(req, res) => {
+        const user = req.body;
+        const wishListed = await wishListedBooksCollection.insertOne(user);
+        res.send(wishListed)
+      })
+
+      app.get('/wishlist', async(req, res) => {
+        let query =  {};
+        if(req.query.email){
+          query= {
+            email: req.query.email
+          }
+        }
+        const cursor = wishListedBooksCollection.find(query);
+        const wishListedBook = await cursor.toArray();
+        res.send(wishListedBook);
+      })
+
+      app.post('/category/637e7e300122d590fe2ebd83', async(req, res) => {
+        const newBook = req.body;
+        const result = await scienceFictionCollection.insertOne(newBook);
+        res.send(result);
+    })
+
+      app.post('/category/637e7e300122d590fe2ebd84', async(req, res) => {
+        const newBook = req.body;
+        const result = await mysteryCollection.insertOne(newBook);
+        res.send(result);
+    })
+
+      app.post('/category/637e7e300122d590fe2ebd85', async(req, res) => {
+        const newBook = req.body;
+        const result = await shortStoriesCollection.insertOne(newBook);
+        res.send(result);
+    })
+
+    app.get('/category/:category', async(req, res) => {
+      let query = {};
+      if(req.query.category){
+        query= {
+          category: req.query.category
+        }
+      }
+      const cursor = addedBooksCollection.find(query);
+      const newAddedBook = await cursor.toArray();
+      res.send(newAddedBook);
+    })
+
+    app.post('/allbooks', async(req, res) => {
+      const newBook = req.body;
+      const books = await allBooksCollection.insertOne(newBook);
+      res.send(books);
+  })
+
+    app.get('/allbooks', async(req, res) => {
+      let query = {};
+      if(req.query.category_id){
+        query = {
+          category_id:  req.query.category_id
+        }
+      }
+      else if(req.query.sellerName){
+        query= {
+          sellerName: req.query.sellerName
+        }
+      }
+      const cursor = allBooksCollection.find(query);
+      const allBooks = await cursor.toArray();
+      res.send(allBooks)
+    })
 
     }
     catch(error){
