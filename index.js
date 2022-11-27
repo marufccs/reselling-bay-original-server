@@ -15,6 +15,22 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 
 const client =  new MongoClient(uri);
 
+function verifyJWT(req, res, next){
+const authHeader = req.headers.authorization;
+if(!authHeader){
+  return res.status(401).send('unauthorized access');
+}
+const token = authHeader.split(' ')[1];
+
+jwt.verify(token, process.env.ACCESS_TOKEN, function(err, decoded){
+  if(err){
+    return res.status(401).send('unauthorized access');
+  }
+  req.decoded = decoded;
+  next();
+})
+}
+
   async function run(){
     try{
         await client.connect();
@@ -98,12 +114,16 @@ const client =  new MongoClient(uri);
           res.send(bookings)
         })
 
-        app.get('/bookings', async(req, res) => {
+        app.get('/bookings', verifyJWT, async(req, res) => {
           let query = {};
           if(req.query.userEmail){
             query= {
               userEmail: req.query.userEmail
             }
+          }
+          const decodedEmail = req.decoded.email;
+          if(userEmail !== decodedEmail ){
+            return res.status(403).send({message: 'forbidden access'})
           }
           const cursor = bookingCollection.find(query);
           const bookings = await cursor.toArray();
