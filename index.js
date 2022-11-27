@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
@@ -26,6 +27,7 @@ const client =  new MongoClient(uri);
         const wishListedBooksCollection =  client.db("resellingBooks").collection("wishlist");
         const addedBooksCollection =  client.db("resellingBooks").collection("newAddedBooks");
         const allBooksCollection =  client.db("resellingBooks").collection("allBooks");
+        const advertisedBooksCollection =  client.db("resellingBooks").collection("advertisedBooks");
         
 
         app.get('/categories', async(req, res) => {
@@ -33,6 +35,17 @@ const client =  new MongoClient(uri);
             const cursor = categoriesCollection.find(query);
             const categories = await cursor.toArray();
             res.send(categories)
+        })
+
+        app.get('/jwt', async(req, res) => {
+          const email = req.query.email;
+          const query = {email: email};
+          const user = await usersCollection.findOne(query);
+          if(user){
+            const token = jwt.sign({email}, process.env.ACCESS_TOKEN);
+            return res.send({accessToken: token})
+          }
+          res.status(403).send({accessToken: ''});
         })
     
         app.post('/users', async(req, res) => {
@@ -215,6 +228,20 @@ const client =  new MongoClient(uri);
       const allBooks = await cursor.toArray();
       res.send(allBooks)
     })
+
+    app.post('/advertisedbooks', async(req, res) => {
+      const newAdvertisedBook = req.body;
+      const advertisedBooks = await advertisedBooksCollection.insertOne(newAdvertisedBook);
+      res.send(advertisedBooks);
+  })
+
+  app.get('/advertisedbooks', async(req, res) => {
+    const query = {};
+    const cursor = advertisedBooksCollection.find(query);
+    const advertisedBooks = await cursor.toArray();
+    res.send(advertisedBooks)
+  })
+
 
     }
     catch(error){
